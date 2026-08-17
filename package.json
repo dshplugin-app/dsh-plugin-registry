@@ -1,0 +1,77 @@
+{
+  "name": "dshplugin-registry",
+  "version": "0.1.0",
+  "description": "DSH Plugin Registry inside DeepSeek Harness — search, compare, and inspect source-backed plugin information before installation.",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dshplugin-app/dsh-plugin-registry.git"
+  },
+  "homepage": "https://dshplugin.app/plugins",
+  "keywords": [
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "plugin-registry",
+    "plugin-directory"
+  ],
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.client.json --noEmit",
+    "build": "tsc -p tsconfig.json && pnpm run build:client",
+    "build:client": "tsdown && node scripts/normalize-client-banner.mjs",
+    "check": "pnpm run typecheck && pnpm run build",
+    "prepack": "pnpm run build",
+    "prepare": "pnpm run build"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-connection",
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-theme"
+      ],
+      "platform": "web"
+    }
+  },
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": "./client/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "client",
+    "cordis.patch.yml",
+    "LICENSE",
+    "README.md",
+    "README.zh-CN.md"
+  ],
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@types/node": "^26.2.0",
+    "@types/react": "~18.3.1",
+    "react": "^18.3.1",
+    "tsdown": "^0.22.14",
+    "typescript": "^7.0.2",
+    "@deepseek-ai/dsh-client-ui-primitives": "^0.1.0-rc.5"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

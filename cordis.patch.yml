@@ -1,0 +1,4 @@
+# DSH bundle patch: inserts the Registry plugin into the active profile.
+- insert:
+    - id: dsh-plugin-registry
+      name: 'dshplugin-registry'
